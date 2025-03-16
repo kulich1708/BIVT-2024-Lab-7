@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_7
+namespace Lab_6
 {
     public class Purple_3
     {
@@ -18,10 +18,10 @@ namespace Lab_7
 
             public string Name => _name;
             public string Surname => _surname;
-            public int Score => (_places.Sum());
+            public int Score { get; private set; }
             public double[] Marks
             {
-                get
+                get 
                 {
                     if (_marks == null) return null;
 
@@ -68,6 +68,7 @@ namespace Lab_7
                     for (int j = 0; j < participants.Length; j++)
                     {
                         sortedParticipants[j]._places[i] = j + 1;
+                        sortedParticipants[j].Score += (j + 1);
                     }
 
                     Array.Copy(sortedParticipants, participants, participants.Length);
@@ -80,7 +81,7 @@ namespace Lab_7
                 var sortedArray = array.OrderBy(x => x.Score).ThenBy(x => x.Places.Min()).ThenByDescending(x => x.Marks.Sum()).ToArray();
                 Array.Copy(sortedArray, array, array.Length);
             }
-
+            
             public void Print()
             {
                 Console.WriteLine($"{_printItem(Name)} {_printItem(Surname)} {_printItem(Score.ToString())} {_printItem(Places.Min().ToString())} {_printItem(Math.Round(Marks.Sum(), 2).ToString())}");
@@ -89,68 +90,6 @@ namespace Lab_7
             {
                 return item + new string(' ', 15 - item.Length);
             }
-        }
-        public abstract class Skating
-        {
-            private Participant[] _participants;
-            protected double[] _moods;
-
-            public Participant[] Participants => _participants == null ? null : (Participant[])_participants.Clone();
-            public double[] Moods => _moods == null ? null : (double[])_moods.Clone();
-            public Skating(double[] moods)
-            {
-                if (moods == null) return;
-                _moods = (double[])moods.Clone();
-                ModificateMood();
-                _participants = new Participant[0];
-            }
-            protected abstract void ModificateMood();
-
-            public void Add(Participant participant)
-            {
-                int participantsLength = _participants.Length;
-                Array.Resize(ref _participants, participantsLength + 1);
-                _participants[participantsLength] = participant;
-            }
-            public void Add(Participant[] participants)
-            {
-                if (participants == null || participants.Length == 0) return;
-
-                _participants = _participants.Concat(participants).ToArray();
-            }
-            public void Evaluate(double[] marks)
-            {
-                if (marks == null || marks.Length == 0) return;
-
-                int targetParticipantIndex = Array.FindIndex(_participants, p => p.Marks.All(x => x == 0));
-                if (targetParticipantIndex == -1) return;
-                Participant targetParticipant = _participants[targetParticipantIndex];
-
-                for (int i = 0; i < marks.Length; i++)
-                    targetParticipant.Evaluate(marks[i] * _moods[i]);
-
-                _participants[targetParticipantIndex] = targetParticipant;
-            }
-        }
-        public class FigureSkating : Skating
-        {
-            public FigureSkating(double[] moods) : base(moods) { }
-            protected override void ModificateMood()
-            {
-                for (int i = 0; i < _moods.Length; i++)
-                    _moods[i] += (i + 1) / 10.0;
-            }
-        }
-        public class IceSkating : Skating
-        {
-            protected override void ModificateMood()
-            {
-                for (int i = 0; i < _moods.Length; i++)
-                {
-                    _moods[i] *= 1 + (i + 1) / 100.0;
-                }
-            }
-            public IceSkating(double[] moods) : base(moods) { }
         }
     }
 }
