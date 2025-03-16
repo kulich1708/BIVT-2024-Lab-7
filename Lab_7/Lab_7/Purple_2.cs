@@ -71,17 +71,17 @@ namespace Lab_7
         public abstract class SkiJumping
         {
             private string _name;
-            private int _standart;
+            private int _standard;
             private Participant[] _participants;
 
             public string Name => _name;
-            public int Standart => _standart;
+            public int Standard => _standard;
             public Participant[] Participants => _participants == null ? null : (Participant[])_participants.Clone();
 
             public SkiJumping(string name, int standart)
             {
                 _name = name;
-                _standart = standart;
+                _standard = standart;
                 _participants = new Participant[0];
             }
 
@@ -103,7 +103,7 @@ namespace Lab_7
                 if (jumperIndex == -1) { Console.WriteLine(1); return; };
 
                 Participant jumper = _participants[jumperIndex];
-                jumper.Jump(distance, marks, Standart);
+                jumper.Jump(distance, marks, Standard);
                 _participants[jumperIndex] = jumper;
             }
             public void Print()
