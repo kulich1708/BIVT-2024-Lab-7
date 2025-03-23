@@ -223,59 +223,8 @@ namespace Lab_7
                     case 1: return response.Animal;
                     case 2: return response.CharacterTrait;
                     case 3: return response.Concept;
-                    default: return "";
+                    default: return string.Empty;
                 }
-            }
-            private (string, double)[] GetGeneralReport()
-            {
-                Response[] responses = new Response[0];
-                foreach (Research research in _researches)
-                {
-                    responses.Concat(research.Responses);
-                }
-
-                int countQuestionInResponse = 3;
-                (string, double)[][] dataAnswers = new (string, double)[countQuestionInResponse][];
-                int[] arrayIndexes = new int[countQuestionInResponse];
-                int countAllAnswers = 0;
-
-                for (int i = 0; i < countQuestionInResponse; i++)
-                    dataAnswers[i] = new (string, double)[responses.Length];
-
-                foreach (Response response in responses)
-                {
-                    for (int i = 0; i < countQuestionInResponse; i++)
-                    {
-                        string answer = _GetAnswer(response, i + 1);
-
-                        if (!dataAnswers[i].Any(x => x.Item1 == answer))
-                        {
-                            int countAnswers = response.CountVotes(responses, i + 1);
-
-                            countAllAnswers += countAnswers;
-                            dataAnswers[i][arrayIndexes[i]] = (answer, countAnswers);
-                            arrayIndexes[i]++;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < countQuestionInResponse; i++)
-                    Array.Resize(ref dataAnswers[i], arrayIndexes[i]);
-
-                (string, double)[] result = new (string, double)[0];
-
-                for (int i = 0; i < countQuestionInResponse; i++)
-                {
-                    Array.Resize(ref dataAnswers[i], arrayIndexes[i] + 1);
-                    result = ((string, double)[])result.Concat(dataAnswers[i]);
-                }
-
-                for (int i = 0; i < result.Length; i++)
-                {
-                    result[i].Item2 /= countAllAnswers / 100.0;
-                }
-
-                return result;
             }
             public (string, double)[] GetGeneralReport(int question)
             {
@@ -284,6 +233,7 @@ namespace Lab_7
                 {
                     responses = responses.Concat(research.Responses).ToArray();
                 }
+
                 (string, double)[] dataAnswers = new (string, double)[responses.Length];
                 int currentIndex = 0;
                 int countAllAnswers = 0;

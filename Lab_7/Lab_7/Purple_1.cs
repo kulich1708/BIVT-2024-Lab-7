@@ -132,8 +132,8 @@ namespace Lab_7
             private Participant[] _participants;
             private Judge[] _judges;
 
-            public Judge[] Judges => _judges == null ? null : (Judge[])_judges.Clone();
-            public Participant[] Participants => _participants == null ? null : (Participant[])_participants.Clone();
+            public Judge[] Judges => _judges;
+            public Participant[] Participants => _participants;
 
             public Competition(Judge[] judges)
             {
@@ -176,8 +176,7 @@ namespace Lab_7
             }
             public void Sort()
             {
-                Participant[] sortedParticipants = _participants.OrderByDescending(x => x.TotalScore).ToArray();
-                Array.Copy(sortedParticipants, _participants, sortedParticipants.Length);
+                Participant.Sort(_participants);
             }
         }
     }

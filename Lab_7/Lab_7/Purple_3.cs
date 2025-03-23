@@ -95,14 +95,16 @@ namespace Lab_7
             private Participant[] _participants;
             protected double[] _moods;
 
-            public Participant[] Participants => _participants == null ? null : (Participant[])_participants.Clone();
-            public double[] Moods => _moods == null ? null : (double[])_moods.Clone();
+            public Participant[] Participants => _participants;
+            public double[] Moods => _moods;
             public Skating(double[] moods)
             {
-                if (moods == null) return;
-                _moods = (double[])moods.Clone();
-                ModificateMood();
                 _participants = new Participant[0];
+                if (moods == null) return;
+                int size = moods.Length < 7 ? moods.Length : 7;
+                _moods = new double[size];
+                Array.Copy(moods, _moods, size);
+                ModificateMood();
             }
             protected abstract void ModificateMood();
 

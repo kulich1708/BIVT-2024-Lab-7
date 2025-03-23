@@ -47,13 +47,13 @@ namespace Lab_7
                 Array.Copy(marks, _marks, _marks.Length);
 
                 int distancePoints = 60 + (distance - target) * 2;
-                distancePoints = distancePoints < 0 ? 0 : distancePoints;
                 Result = distancePoints + marks.Sum() - marks.Min() - marks.Max();
+                if (Result < 0) Result = 0;
             }
 
             public static void Sort(Participant[] array)
             {
-                if (array == null) return;
+                if (array == null || array.Length == 0) return;
 
                 var sortedArray = array.OrderByDescending(x => x.Result).ToArray();
                 Array.Copy(sortedArray, array, array.Length);
@@ -100,11 +100,9 @@ namespace Lab_7
             public void Jump(int distance, int[] marks)
             {
                 int jumperIndex = Array.FindIndex(_participants, participant => participant.Marks.All(x => x == 0));
-                if (jumperIndex == -1) { Console.WriteLine(1); return; };
+                if (jumperIndex == -1) return;
 
-                Participant jumper = _participants[jumperIndex];
-                jumper.Jump(distance, marks, Standard);
-                _participants[jumperIndex] = jumper;
+                _participants[jumperIndex].Jump(distance, marks, Standard); ;
             }
             public void Print()
             {

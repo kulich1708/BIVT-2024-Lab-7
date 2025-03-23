@@ -70,7 +70,7 @@ namespace Lab_7
             private Sportsman[] _sportsmen;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen => (Sportsman[])_sportsmen.Clone();
+            public Sportsman[] Sportsmen => _sportsmen;
 
             public Group(string name)
             {
@@ -147,24 +147,28 @@ namespace Lab_7
             }
             public void Shuffle()
             {
+                Sort();
                 Sportsman[] men;
                 Sportsman[] women;
 
                 Split(out men, out women);
 
-                Sportsman.Sort(men);
-                Sportsman.Sort(women);
-
                 int menLength = men.Length;
                 int womenLength = women.Length;
-
-                Array.Resize(ref _sportsmen, menLength + womenLength);
-
+                bool manFirst = men[0].Time <= women[0].Time;
+                
                 int i = 0, j = 0;
                 while (i < Math.Min(menLength, womenLength))
                 {
-                    _sportsmen[2*i] = men[i];
-                    _sportsmen[2*i + 1] = women[i];
+                    if (manFirst)
+                    {
+                        _sportsmen[2 * i] = men[i];
+                        _sportsmen[2 * i + 1] = women[i];
+                    } else
+                    {
+                        _sportsmen[2 * i] = women[i];
+                        _sportsmen[2 * i + 1] = men[i];
+                    }
                     i++;
                 }
                 while (i + j < menLength)

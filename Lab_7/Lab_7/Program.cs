@@ -19,9 +19,9 @@ namespace Lab_7
             Program program = new Program();
             //program.Task_1();
             //program.Task_2();
-            //program.Task_3();
+            //dprogram.Task_3();
             //program.Task_4();
-            //program.Task_5();
+            program.Task_5();
         }
         public void Task_1()
         {
@@ -85,7 +85,8 @@ namespace Lab_7
             }
             Purple_1.Competition competition = new Purple_1.Competition(judges);
             competition.Add(participants);
-            Purple_1.Participant.Sort(participants);
+            competition.Sort();
+            participants = competition.Participants;
 
             string[] items = new string[] { "Name", "Surname", "TotalScore" };
             PrintHead(items);
@@ -227,7 +228,7 @@ namespace Lab_7
             double[] maleTimes = { 142.05, 294.32, 79.26, 230.63, 292.38 };
 
             // 6. Female times
-            double[] femaleTimes = { 422.64, 185.23, 35.16, 376.12, 279.20, 467.60, 473.82, 290.14, 368.60, 212.67 };
+            double[] femaleTimes = { 422.64, 185.23, 135.16, 376.12, 279.20, 467.60, 473.82, 290.14, 368.60, 212.67 };
             Purple_4.SkiMan[] skiMan = new Purple_4.SkiMan[maleFirstNames.Length];
             Purple_4.SkiWoman[] skiWoman = new Purple_4.SkiWoman[femaleFirstNames.Length];
 
@@ -263,7 +264,7 @@ namespace Lab_7
             maleTimes = new double[] { 472.11, 213.92, 102.13, 248.68, 325.28, 300.00 };
 
             // 6. Female times
-            femaleTimes = new double[] { 112.49, 263.21, 350.75, 252.16, 402.20, 397.33, 384.94, 8.09, 480.52 };
+            femaleTimes = new double[] { 112.49, 263.21, 350.75, 252.16, 402.20, 397.33, 384.94, 118.09, 480.52 };
 
             skiMan = new Purple_4.SkiMan[maleFirstNames.Length];
             skiWoman = new Purple_4.SkiWoman[femaleFirstNames.Length];
@@ -304,6 +305,7 @@ namespace Lab_7
 
                 research.Add(answers);
             }
+
             research = report.MakeResearch();
             for (int i = 0; i < 20; i++)
             {
