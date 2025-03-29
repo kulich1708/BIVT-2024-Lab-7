@@ -18,7 +18,7 @@ namespace Lab_7
 
             public string Name => _name;
             public string Surname => _surname;
-            public int Score => (_places.Sum());
+            public int Score => _places == null ? 0 :_places.Sum();
             public double[] Marks
             {
                 get
